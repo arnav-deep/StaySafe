@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.throwntech.staysafe.MapActivity">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapActivity" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:visibility="invisible"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+
+            <TextView
+                android:id="@+id/judgement_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textColor="#4F5C9B"
+                android:textSize="22sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/judgement_card"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/area_title_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="29dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:text="Area" />
+
+                <TextView
+                    android:id="@+id/id_title_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="29dp"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:text="Camera ID" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/judgement_card"
+                android:paddingTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/area_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="29dp"
+                    android:layout_marginTop="2dp"
+                    android:textAlignment="center"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/id_card"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_height="29dp"
+                    android:layout_marginTop="2dp"
+                    android:textAlignment="center"
+                    android:textSize="13sp"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="50dp"
+            android:background="@color/cardview_light_background"
+            android:text="@string/sos" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="50dp"
+            android:background="@color/cardview_light_background"
+            android:text="@string/contacts" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
