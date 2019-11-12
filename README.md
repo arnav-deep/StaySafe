@@ -17,3 +17,5 @@ StaySafe was created as part of 'Safty and Security in IIITDM Jabalpur', a proje
 
 # Credits
 The app was developed initially on November 10, 2019, as part of the project 'Safty and Security in IIITDM Jabalpur' by [Arnav Deep](https://github.com/arnav-deep), [Shivam Dubey](https://github.com/shivam-dubey) and [Kaushal Sharma](https://github.com/shkaushal).
+
+© November 2019. All rights reserved.
