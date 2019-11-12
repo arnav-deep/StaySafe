@@ -7,7 +7,7 @@ IIITDM Jabalpur campus is located right beside Dumna Nature Reserve. Dumna Natur
 
 StaySafe is the android application to the IoT based, Image Processing project on Raspberry Pi. This app notifies users about the location where the leopard has been detected in real-time and also provides an SOS button and Emergency Contacts. This way, users can stay away from areas where leopards are detected frequently.
  
-<p align = "center">
+<p align = "center"> <br/>
 <img align="left" src="images/main_screen.png">
 <img align="right" src="images/leopard_detected.png">
 <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
