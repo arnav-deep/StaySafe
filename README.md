@@ -1,5 +1,5 @@
 # StaySafe
-Android app to warn people of leopards in the area.
+Android app to warn people of dangerous animals in the area.
 
 ![main_screen](images/main_screen.png)
 
