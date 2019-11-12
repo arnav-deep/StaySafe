@@ -1,7 +1,9 @@
 # StaySafe
 Android app to warn people of leopards in the area.
 
-#What is StaySafe?
+![main_screen] (images/main_screen.png)
+
+# What is StaySafe?
 StaySafe is a 
 
 # The Motivation
