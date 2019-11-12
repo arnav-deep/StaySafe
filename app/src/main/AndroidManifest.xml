@@ -34,7 +34,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDkydIXltCjQv9YdKaSAxZlvwXYcYYLvjQ" /> <!-- This is a restricted key. Add your own Google Cloud API key -->
+            android:value="AIzaSyDoFZgmkggWh4bVOGOOqo9oJYUW2QmAVNw" /> <!-- This is a restricted key. Add your own Google Cloud API key -->
 
     </application>
 

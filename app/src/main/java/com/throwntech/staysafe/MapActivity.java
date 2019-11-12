@@ -1,6 +1,7 @@
 package com.throwntech.staysafe;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -62,9 +63,6 @@ import static com.google.android.gms.maps.GoogleMap.*;
 import static com.throwntech.staysafe.R.drawable.ic_red_alert;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, OnMarkerClickListener {
-
-    Button sos_button;
-    Button contact_Button;
 
     private static final String TAG = "MapActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -156,7 +154,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         mMap = googleMap;
         try {
             boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.google_maps_style));
-
             if (!success) {
                 Log.e("MapsActivityRaw", "Style parsing failed.");
             }
@@ -253,6 +250,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String CHANNEL_ID="ALERT";
     private static final String CHANNEL_NAME="STAYSAFE";
     private static final String CHANNEL_DESC="LEOPARD DETECTED";
+
+    Button sos_button;
+    Button contact_Button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
