@@ -1,7 +1,7 @@
 package com.throwntech.staysafe;
 
 import android.Manifest;
-import android.app.ActionBar;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -152,14 +152,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: Map is ready here");
         mMap = googleMap;
-        try {
-            boolean success = mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.google_maps_style));
-            if (!success) {
-                Log.e("MapsActivityRaw", "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e("MapsActivityRaw", "Can't find style.", e);
-        }
         mMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(new OnMapClickListener() {
             @Override
@@ -220,7 +212,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                     dataSnapshot.getRef().child("leopard").child("level").setValue("0");
                                 }
                             },
-                            600000
+                            10000
                     );
                 }
             }
@@ -277,11 +269,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-                SimpleDateFormat stf = new SimpleDateFormat("k" );
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat stf = new SimpleDateFormat("k" );
                 String currentTime = stf.format(new Date());
                 Log.d("date", currentTime);
                 int time_check = Integer.parseInt(currentTime);
-                SimpleDateFormat sdf = new SimpleDateFormat("dd");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 String currentDate = sdf.format(new Date());
                 Log.d("date", currentDate);
                 int date_check = Integer.parseInt(currentDate);
@@ -344,7 +336,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
 
             void openActivity2() {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("dd");
                 String currentDateAndTime = sdf.format(new Date());
                 Log.d("date", currentDateAndTime);
                 int date_check = Integer.parseInt(currentDateAndTime);
