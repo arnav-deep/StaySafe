@@ -30,4 +30,4 @@ The app was developed initially in November 2019, as part of the project 'Safty 
 ## License
 MIT License.
 
-© 2019. All rights reserved.
+© November 2019. All rights reserved.
