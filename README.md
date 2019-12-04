@@ -25,9 +25,9 @@ The applicaion conains a map with location of every Security Guard Checkpoint ma
 Whenever 'leopard/level' equals to "1", a notification is pushed by the app.
 
 ## Developers
-The app was developed initially on November 10, 2019, as part of the project 'Safty and Security in IIITDM Jabalpur' by [Arnav Deep](https://github.com/arnav-deep), [Shivam Dubey](https://github.com/shushvam) and [Kaushal Sharma](https://github.com/shkaushal).
+The app was developed initially in November 2019, as part of the project 'Safty and Security in IIITDM Jabalpur' by [Arnav Deep](https://github.com/arnav-deep), [Shivam Dubey](https://github.com/shushvam) and [Kaushal Sharma](https://github.com/shkaushal).
 
 ## License
 MIT License.
 
-© 2019. All rights reserved.
+© November 2019. All rights reserved.
