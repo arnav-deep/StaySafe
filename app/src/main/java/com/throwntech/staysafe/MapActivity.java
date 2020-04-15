@@ -81,7 +81,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     private void displayNotification(String area, double latitude, double longitude){
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,CHANNEL_ID).setSmallIcon(ic_red_alert).setAutoCancel(true)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.icon)).setContentTitle("Emergency")
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.icon)).setContentTitle("Warning")
                 .setContentText("Leopard detected near " + area).setColor(1255082051).setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MapActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);

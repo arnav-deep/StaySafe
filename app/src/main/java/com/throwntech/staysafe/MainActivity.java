@@ -2,8 +2,11 @@ package com.throwntech.staysafe;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,17 +14,18 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
-    private CountDownTimer timer;
-
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.main_activity);
         if(isServicesOK()){
             init();
@@ -29,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init(){
-        timer = new CountDownTimer(3000,1000) {
+        CountDownTimer timer = new CountDownTimer(3000, 1000) {
             @Override
             public void onTick(long l) {
             }
@@ -43,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         };
         timer.start();
     }
+
     public boolean isServicesOK(){
         Log.d(TAG, "isServicesOK: Checking google services version");
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
