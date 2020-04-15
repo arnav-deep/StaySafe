@@ -21,6 +21,8 @@ The applicaion conains a map with location of every Security Guard Checkpoint ma
 <p align = "center"> <br/>
 <img align="center" src="images/database.png" alt="Database">
 <br/>
+ 
+ The Image Processing that is used to detect leopaprds can be found on [this repository](https://github.com/arnav-deep/leopard-detection).
 
 Whenever 'leopard/level' equals to "1", a notification is pushed by the app.
 
