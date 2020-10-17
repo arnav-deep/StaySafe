@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +63,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG = "MapActivity";
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COARSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final int REQUEST_PHONE_CALL = 1;
+    LocationManager lm;
+
 
     private Boolean mLocationPermissionGranted = false;
     private GoogleMap mMap;
@@ -79,9 +84,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void displayNotification(String area, double latitude, double longitude){
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this,CHANNEL_ID).setSmallIcon(ic_red_alert).setAutoCancel(true)
-                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(),R.drawable.icon)).setContentTitle("Warning")
+    private void displayNotification(String area, double latitude, double longitude) {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(ic_red_alert).setAutoCancel(true)
+                .setLargeIcon(BitmapFactory.decodeResource(this.getResources(), R.drawable.icon)).setContentTitle("Warning")
                 .setContentText("Leopard detected near " + area).setColor(1255082051).setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, new Intent(this, MapActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -91,35 +96,82 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     }
 
     private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation: getting the current device location");
+        Log.d(TAG, "getDeviceLocation: going to institute's location");
         FusedLocationProviderClient mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        try {
-            if (mLocationPermissionGranted) {
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(MapActivity.this, "Grant location permission for better functionality.", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(MapActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                if (mMap != null) {
+                    mMap.setMyLocationEnabled(true);
+                }
+            }
+        }
+        final LatLng latLng = new LatLng(23.1767917, 80.0236891);
+        float zoom = 15f;
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+        if (mLocationPermissionGranted) {
+            Task location = mFusedLocationProviderClient.getLastLocation();
+            location.addOnCompleteListener(new OnCompleteListener() {
 
-                    @Override
-                    public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "onComplete: got the location");
-                            Location currentLocation = (Location) task.getResult();
-                            assert currentLocation != null;
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful() && lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                        Log.d(TAG, "onComplete: got the location");
+                        Location currentLocation = (Location) task.getResult();
+                        assert currentLocation != null;
+                        final double latmax = 23.187010;
+                        final double latmin = 23.164480;
+                        final double lngmax = 80.040768;
+                        final double lngmin = 80.008818;
+                        final double currLat = currentLocation.getLatitude();
+                        final double currLng = currentLocation.getLongitude();
+                        if (currLat >= latmin && currLat <= latmin && currLng >= lngmax && currLng >= lngmin) {
                             final LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             float zoom = 15f;
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+                        }
+                        if ((ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) || (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
                             mMap.setMyLocationEnabled(true);
                         }
-                        else {
-                            Log.d(TAG, "onComplete: current location is null");
-                            Toast.makeText(MapActivity.this, "Couldn't find the current location", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
-                });
-            }
-        } catch (SecurityException e) {
-            Log.d(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
+                    else {
+                        Log.d(TAG, "onComplete: current location is null");
+                        Toast.makeText(MapActivity.this, "Couldn't find the current location", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
+//        try {
+//            if (mLocationPermissionGranted) {
+//                Task location = mFusedLocationProviderClient.getLastLocation();
+//                location.addOnCompleteListener(new OnCompleteListener() {
+//
+//                    @Override
+//                    public void onComplete(@NonNull Task task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "onComplete: got the location");
+//                            Location currentLocation = (Location) task.getResult();
+//                            assert currentLocation != null;
+//                            final LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+//                            float zoom = 15f;
+//                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
+//                            mMap.setMyLocationEnabled(true);
+//                        }
+//                        else {
+//                            Log.d(TAG, "onComplete: current location is null");
+//                            Toast.makeText(MapActivity.this, "Couldn't find the current location", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//            }
+//        } catch (SecurityException e) {
+//            Log.d(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
+//        }
+//    }
 
     private void markerAdder(long id, String level, double longitude, double latitude) {
         if (!markerHashMap.containsKey(id)) {
@@ -207,7 +259,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                     dataSnapshot.getRef().child("leopard").child("level").setValue("0");
                                 }
                             },
-                            10000
+                            300000
                     );
                 }
             }
@@ -253,6 +305,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             NotificationManager manager =getSystemService(NotificationManager.class);
             assert manager != null;
             manager.createNotificationChannel(channel);
+            lm = (LocationManager)this.getSystemService(MapActivity.this.LOCATION_SERVICE);
         }
 
         getLocationPermission();
@@ -315,10 +368,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String s = "tel: " + phone;
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(s));
-                if (ActivityCompat.checkSelfPermission(MapActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    return;
+                if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(MapActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_PHONE_CALL);
+                    if (ContextCompat.checkSelfPermission(MapActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        startActivity(intent);
+                    }
                 }
-                startActivity(intent);
+                else {
+                    startActivity(intent);
+                }
             }
         });
 
